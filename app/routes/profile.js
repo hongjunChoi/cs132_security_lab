@@ -5,6 +5,20 @@ function ProfileHandler(db) {
     "use strict";
 
     var profile = new ProfileDAO(db);
+    var crypto = require('crypto');
+
+    function decrypt(encrypted){
+        // console.log(encrypted)
+        // console.log("&&&&&&")
+        var decipher = crypto.createCipher('aes192', 'a password');
+        var decrypted = decipher.update(encrypted, 'hex', 'utf8');
+        console.log(decrypted)
+
+        decrypted += decipher.final('utf8');
+        
+        return decrypted;
+        //return encrypted
+    }
 
     this.displayProfile = function(req, res, next) {
         var userId = req.session.userId;
@@ -46,6 +60,7 @@ function ProfileHandler(db) {
                 //firstName = firstName.trim();
                 user.updateSuccess = true;
                 user.userId = userId;
+                console.log(user)
 
                 return res.render("profile", user);
             }

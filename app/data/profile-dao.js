@@ -13,30 +13,32 @@ function ProfileDAO(db) {
     var users = db.collection("users");
 
     var crypto = require('crypto');
-    var cipher = crypto.createCipher('aes192', 'a password');
-    var decipher = crypto.createDecipher('aes192', 'a password');
+    
+    
 
     function encrypt(text){
-        // console.log(text)
-        // var encrypted = cipher.update(text, 'utf8', 'hex');
-        // console.log(encrypted)
+        console.log(text)
+        var cipher = crypto.createDecipher('aes192', 'a password');
+        var encrypted = cipher.update(text, 'utf8', 'hex');
+        console.log(encrypted)
 
-        // encrypted += cipher.final('hex');
+        encrypted += cipher.final('hex');
 
-        // return encrypted;
-        return text;
+        return encrypted;
+        //return text;
     }
     
     function decrypt(encrypted){
         // console.log(encrypted)
         // console.log("&&&&&&")
-        // var decrypted = decipher.update(encrypted, 'hex', 'utf8');
-        // console.log(decrypted)
+        var decipher = crypto.createCipher('aes192', 'a password');
+        var decrypted = decipher.update(encrypted, 'hex', 'utf8');
+        console.log(decrypted)
 
-        // decrypted += decipher.final('utf8');
+        decrypted += decipher.final('utf8');
         
-        // return decrypted;
-        return encrypted
+        return decrypted;
+        //return encrypted
     }
 
     
@@ -51,26 +53,41 @@ function ProfileDAO(db) {
         // Create user document
         var user = {};
         if (firstName != "" && typeof firstName != "undefined") {
+            console.log("################")
             user.firstName = encrypt(firstName);
+            console.log("%%%%%%%%%%%%%%%%")
+
         }
         if (lastName != "" && typeof lastName != "undefined") {
+            console.log("################")
             user.lastName = encrypt(lastName);
+            console.log("%%%%%%%%%%%%%%%%")
         }
         if (address != "" && typeof address != "undefined") {
+            console.log("################")
             user.address = encrypt(address);
+            console.log("%%%%%%%%%%%%%%%%")
         }
         if (bankAcc != "" && typeof bankAcc != "undefined"){
+            console.log("################")
             user.bankAcc = encrypt(bankAcc);
+            console.log("%%%%%%%%%%%%%%%%")
         }
         if (bankRouting != "" && typeof bankRouting != "undefined"){
+            console.log("################")
             user.bankRouting = encrypt(bankRouting);
+            console.log("%%%%%%%%%%%%%%%%")
         }
         if (ssn != "" && typeof ssn != "undefined") {
-            user.ssn = encrypt(ssn); //<- what if your server gets hacked?
+            console.log("################")
+            user.ssn = encrypt(ssn);
+            console.log("%%%%%%%%%%%%%%%%") //<- what if your server gets hacked?
             //encrypt sensitive fields!
         }
         if (dob != "" && typeof dob != "undefined") {
+            console.log("################")
             user.dob = encrypt(dob);
+            console.log("%%%%%%%%%%%%%%%%")
         }
 
         users.update({
