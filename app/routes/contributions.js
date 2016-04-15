@@ -22,9 +22,13 @@ function ContributionsHandler(db) {
          ** What is bad about using eval() to parse   **
          ** user input here?                          **
          ***********************************************/
-        var preTax = eval(req.body.preTax);
-        var afterTax = eval(req.body.afterTax);
-        var roth = eval(req.body.roth);
+        // var preTax = eval(req.body.preTax);
+        // var afterTax = eval(req.body.afterTax);
+        // var roth = eval(req.body.roth);
+
+        var preTax = (req.body.preTax);
+        var afterTax = (req.body.afterTax);
+        var roth = (req.body.roth);
 
         var userId = req.session.userId;
 
@@ -35,6 +39,22 @@ function ContributionsHandler(db) {
                 userId: userId
             });
         }
+
+
+
+
+
+
+
+
+
+        
+
+        preTax = eval(req.body.preTax);
+        afterTax = eval(req.body.afterTax);
+        roth = eval(req.body.roth);
+
+
         // Prevent more than 30% contributions
         if (preTax + afterTax + roth > 30) {
             return res.render("contributions", {
