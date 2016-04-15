@@ -13,36 +13,28 @@ function ProfileDAO(db) {
     var users = db.collection("users");
 
     var crypto = require('crypto');
-    
-    
 
     function encrypt(text){
-        console.log(text)
-        var cipher = crypto.createDecipher('aes192', 'a password');
+        // console.log(text)
+        var cipher = crypto.createCipher('aes192', 'a password');
         var encrypted = cipher.update(text, 'utf8', 'hex');
-        console.log(encrypted)
-
         encrypted += cipher.final('hex');
-
         return encrypted;
-        //return text;
     }
     
     function decrypt(encrypted){
-        // console.log(encrypted)
-        // console.log("&&&&&&")
-        var decipher = crypto.createCipher('aes192', 'a password');
+
+        console.log("decrpting "+ encrypted);
+        var decipher = crypto.createDecipher('aes192', 'a password');
         var decrypted = decipher.update(encrypted, 'hex', 'utf8');
-        console.log(decrypted)
 
         decrypted += decipher.final('utf8');
-        
-        return decrypted;
-        //return encrypted
+                console.log("result "+ decrypted);
+
+        return decrypted
     }
 
     
-
     /*************** SECURITY ISSUE ****************
      ** Sensitive data should be handled with     **
      ** encyrption. Check out the "crypto" module **

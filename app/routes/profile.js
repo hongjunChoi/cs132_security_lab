@@ -8,16 +8,15 @@ function ProfileHandler(db) {
     var crypto = require('crypto');
 
     function decrypt(encrypted){
-        // console.log(encrypted)
-        // console.log("&&&&&&")
-        var decipher = crypto.createCipher('aes192', 'a password');
+
+        console.log("decrpting "+ encrypted);
+        var decipher = crypto.createDecipher('aes192', 'a password');
         var decrypted = decipher.update(encrypted, 'hex', 'utf8');
-        console.log(decrypted)
 
         decrypted += decipher.final('utf8');
-        
-        return decrypted;
-        //return encrypted
+                console.log("result "+ decrypted);
+
+        return decrypted
     }
 
     this.displayProfile = function(req, res, next) {
@@ -60,7 +59,41 @@ function ProfileHandler(db) {
                 //firstName = firstName.trim();
                 user.updateSuccess = true;
                 user.userId = userId;
-                console.log(user)
+                if(user.firstName != "" && typeof user.firstName != "undefined"){
+                     console.log("$$$$$$$$$$$$$$$");
+                     console.log(user.firstName);
+                    user.firstName = decrypt(user.firstName)
+
+                }if(user.lastName != "" && typeof user.lastName != "undefined"){
+                    console.log("$$$$$$$$$$$$$$$");
+                    console.log(user.lastName);
+                    user.lastName = decrypt(user.lastName)
+
+                }if(user.bankRouting != "" && typeof user.bankRouting != "undefined"){
+                     console.log("$$$$$$$$$$$$$$$");
+                    console.log(user.bankRouting);
+                    user.bankRouting = decrypt(user.bankRouting)
+
+                }if(user.bankAcc != "" && typeof user.bankAcc != "undefined"){
+                    console.log("$$$$$$$$$$$$$$$");
+                    console.log(user.bankAcc);
+                    user.bankAcc = decrypt(user.bankAcc)
+                    
+                }if(user.ssn != "" && typeof user.ssn != "undefined"){
+                    console.log("$$$$$$$$$$$$$$$");
+                    console.log(user.ssn);
+                    user.ssn = decrypt(user.ssn)
+
+                }if(user.dob != "" && typeof user.dob != "undefined"){
+                    console.log("$$$$$$$$$$$$$$$");
+                    console.log(user.dob);
+                    user.dob = decrypt(user.dob)
+
+                }if(user.address != "" && typeof user.address != "undefined"){
+                    console.log("$$$$$$$$$$$$$$$");
+                    console.log(user.address);
+                    user.address = decrypt(user.address)
+                }
 
                 return res.render("profile", user);
             }
