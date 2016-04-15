@@ -13,33 +13,25 @@ function ProfileDAO(db) {
     var users = db.collection("users");
 
     const crypto = require('crypto');
-    const cipher = crypto.createCipher('aes192', 'a password');
-    var decipher = crypto.createDecipher('aes192', 'a password');
 
     function encrypt(text){
         // console.log(text)
+        var cipher = crypto.createCipher('aes192', 'a password');
         var encrypted = cipher.update(text, 'utf8', 'hex');
         encrypted += cipher.final('hex');
-        console.log("encrypting " + text);
-        console.log("result: " + encrypted);
-        // console.log(encrypted)
-
-        // encrypted += cipher.final('hex');
-
-        // return encrypted;
         return encrypted;
     }
     
     function decrypt(encrypted){
-        // console.log(encrypted)
-        // console.log("&&&&&&")
-        // var decrypted = decipher.update(encrypted, 'hex', 'utf8');
-        // console.log(decrypted)
 
-        // decrypted += decipher.final('utf8');
-        
-        // return decrypted;
-        return encrypted
+        console.log("decrpting "+ encrypted);
+        var decipher = crypto.createDecipher('aes192', 'a password');
+        var decrypted = decipher.update(encrypted, 'hex', 'utf8');
+
+        decrypted += decipher.final('utf8');
+                console.log("result "+ decrypted);
+
+        return decrypted
     }
 
     
