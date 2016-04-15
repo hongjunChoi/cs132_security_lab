@@ -12,19 +12,22 @@ function ProfileDAO(db) {
 
     var users = db.collection("users");
 
-    var crypto = require('crypto');
-    var cipher = crypto.createCipher('aes192', 'a password');
+    const crypto = require('crypto');
+    const cipher = crypto.createCipher('aes192', 'a password');
     var decipher = crypto.createDecipher('aes192', 'a password');
 
     function encrypt(text){
         // console.log(text)
-        // var encrypted = cipher.update(text, 'utf8', 'hex');
+        var encrypted = cipher.update(text, 'utf8', 'hex');
+        encrypted += cipher.final('hex');
+        console.log("encrypting " + text);
+        console.log("result: " + encrypted);
         // console.log(encrypted)
 
         // encrypted += cipher.final('hex');
 
         // return encrypted;
-        return text;
+        return encrypted;
     }
     
     function decrypt(encrypted){
