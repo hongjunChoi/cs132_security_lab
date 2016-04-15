@@ -20,6 +20,7 @@ function SessionHandler(db) {
     };
 
     this.isLoggedInMiddleware = function(req, res, next) {
+        console.log("-----------");
         if (req.session.userId) {
             next();
         } else {
@@ -27,6 +28,43 @@ function SessionHandler(db) {
             return res.redirect("/login");
         }
     };
+
+    //Added admin middleware
+
+    this.isAdminMiddleware = function(req, res, next) {
+        console.log("==========");
+        if (req.session.userId) {
+            var usersCol = db.collection("users");
+            var cursor = usersCol.find({ "_id" : req.session.userId});
+            cursor.each(function(err, user) {
+                if (user != null){
+                    if (user.isAdmin){
+                        next();
+                    }
+                }
+            });
+        }else{
+            return res.redirect("/dashboard");
+        }
+    };
+
+    function checkIfAdmin(id){
+        var MongoClient = require("mongodb").MongoClient;
+        var config = require("../../config/config");
+        MongoClient.connect(config.db, function(err, db) {
+            var usersCol = db.collection("users");
+            var cursor = usersCol.find({ "_id" : id});
+            cursor.each(function(err, user) {
+                if (user != null && user.isAdmin) {
+                    console.log("answer")
+                    return true;
+                }
+            });
+
+            return false
+        });
+
+    }
 
     this.displayLoginPage = function(req, res, next) {
         return res.render("login", {
@@ -105,7 +143,7 @@ function SessionHandler(db) {
         var FNAME_RE = /^.{1,100}$/;
         var LNAME_RE = /^.{1,100}$/;
         var EMAIL_RE = /^[\S]+@[\S]+\.[\S]+$/;
-        var PASS_RE = /^.{1,20}$/; //regex to ensure valid password
+        var PASS_RE = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]{8})$/; //regex to ensure valid password
 
         /*************** SECURITY ISSUE ****************
          ** Stronger password regexes should be used; **
