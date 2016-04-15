@@ -26,9 +26,9 @@ function ContributionsHandler(db) {
         // var afterTax = eval(req.body.afterTax);
         // var roth = eval(req.body.roth);
 
-        var preTax = parseInt(req.body.preTax);
-        var afterTax = parseInt(req.body.afterTax);
-        var roth = parseInt(req.body.roth);
+        var preTax = (req.body.preTax);
+        var afterTax = (req.body.afterTax);
+        var roth = (req.body.roth);
 
         var userId = req.session.userId;
 
@@ -39,6 +39,12 @@ function ContributionsHandler(db) {
                 userId: userId
             });
         }
+
+        preTax = eval(req.body.preTax);
+        afterTax = eval(req.body.afterTax);
+        roth = eval(req.body.roth);
+
+
         // Prevent more than 30% contributions
         if (preTax + afterTax + roth > 30) {
             return res.render("contributions", {
