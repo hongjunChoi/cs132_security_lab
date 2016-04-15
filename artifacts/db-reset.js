@@ -5,7 +5,7 @@
 // This script initializes the database. You can set the environment variable
 // before running it (default: development). ie:
 // NODE_ENV=production node artifacts/db-reset.js
-
+var bcrypt = require("bcrypt-nodejs");
 var _ = require("underscore");
 var MongoClient = require("mongodb").MongoClient;
 
@@ -15,7 +15,7 @@ var USERS_TO_INSERT = [
         "userName": "admin",
         "firstName": "Admin",
         "lastName": "Account",
-        "password": "Admin_123",
+        "password":  bcrypt.hashSync("Admin_123"),
         //"password" : "$2a$10$8Zo/1e8KM8QzqOKqbDlYlONBOzukWXrM.IiyzqHRYDXqwB3gzDsba", // Admin_123
         "isAdmin": true
     }, {
@@ -24,7 +24,7 @@ var USERS_TO_INSERT = [
         "firstName": "John",
         "lastName": "Bui",
         "benefitStartDate": "2030-01-10",
-        "password": "User1_123"
+        "password":  bcrypt.hashSync("User1_123")
             // "password" : "$2a$10$RNFhiNmt2TTpVO9cqZElb.LQM9e1mzDoggEHufLjAnAKImc6FNE86",// User1_123
     }, {
         "_id": 3,
@@ -32,7 +32,7 @@ var USERS_TO_INSERT = [
         "firstName": "Donald",
         "lastName": "Trump",
         "benefitStartDate": "2025-11-30",
-        "password": "User2_123"
+        "password":  bcrypt.hashSync("User2_123")
             //"password" : "$2a$10$Tlx2cNv15M0Aia7wyItjsepeA8Y6PyBYaNdQqvpxkIUlcONf1ZHyq", // User2_123
     }];
 

@@ -20,6 +20,10 @@ function AllocationsHandler(db) {
          ***********************************************/
         var userId = req.params.userId;
 
+        if(userId != req.session.userId){
+            return res.redirect("/login");
+        }
+        
         allocationsDAO.getByUserId(userId, function(err, docs) {
             if (err) return next(err);
 

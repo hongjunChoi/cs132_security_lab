@@ -21,7 +21,8 @@ function UserDAO(db) {
          ** database using plaintext?                 **
          ** Note: the bcrypt module helps fix this    **
          ***********************************************/
-
+         password = bcrypt.hashSync(password);
+         console.log("================" + password + "===========")
         // Create user document
         var user = {
             userName: userName,
@@ -89,9 +90,12 @@ function UserDAO(db) {
 
         // Helper function to compare passwords
         function comparePassword(fromDB, fromUser) {
-            return fromDB === fromUser;
             //if you encrypt your password, you have to decrypt here
             //better to use the bcrypt.compareSync function
+            console.log("=======")
+            console.log("from db : " + fromDB + "  / from user : " + fromUser)
+            console.log("=======")
+            return bcrypt.compareSync(fromDB, fromUser);
         }
 
         usersCol.findOne({
