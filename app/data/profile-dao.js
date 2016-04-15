@@ -53,26 +53,26 @@ function ProfileDAO(db) {
 
         // Create user document
         var user = {};
-        if (firstName) {
+        if (firstName != "" && typeof firstName != "undefined") {
             user.firstName = encrypt(firstName);
         }
-        if (lastName) {
+        if (lastName != "" && typeof lastName != "undefined") {
             user.lastName = encrypt(lastName);
         }
-        if (address) {
+        if (address != "" && typeof address != "undefined") {
             user.address = encrypt(address);
         }
-        if (bankAcc) {
+        if (bankAcc != "" && typeof bankAcc != "undefined"){
             user.bankAcc = encrypt(bankAcc);
         }
-        if (bankRouting) {
+        if (bankRouting != "" && typeof bankRouting != "undefined"){
             user.bankRouting = encrypt(bankRouting);
         }
-        if (ssn) {
+        if (ssn != "" && typeof ssn != "undefined") {
             user.ssn = encrypt(ssn); //<- what if your server gets hacked?
             //encrypt sensitive fields!
         }
-        if (dob) {
+        if (dob != "" && typeof dob != "undefined") {
             user.dob = encrypt(dob);
         }
 
